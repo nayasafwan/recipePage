@@ -11,7 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        beige : "#fff8f4",
+        secondary : "#3d3d4e"
       },
+      fontFamily : {
+        sans : ['Mona sans',  'ui-sans-serif', 'system-ui']
+      }
     },
   },
   plugins: [],

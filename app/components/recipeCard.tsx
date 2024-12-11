@@ -1,8 +1,9 @@
+import Image from "next/image";
 import { Recipe } from "../interfaces/interface";
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
-  function formatDate(date: string) {
+  function formatDate(date: string) { 
     const newDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
       day: "2-digit",
@@ -32,7 +33,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
           <p>{recipe.cookingTime}</p>
           </div>
           <h1 className="text-gray-700 text-sm mx-3">
-            {formatDate(recipe.createdAt)}
+            21 May
           </h1>
         </div>
       </div>
