@@ -5,49 +5,17 @@ import RecipeCard from "./components/recipeCard";
 import {Recipe} from "./interfaces/interface";
 import { useEffect, useState } from "react";
 import axios, {AxiosResponse} from "axios";
+import Categories from "./components/categorie";
 
-// const recipes : Recipe[] = [
-//   {
-//     id: "1",
-//     name: "Pancakes",
-//     category: "Breakfast",
-//     image:
-//       "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//     cookingTime: "30 mins",
-//     createdAt: "2021-05-20",
-//   },
-//   {
-//     id: "2",
-//     name: "Spaghetti",
-//     category: "Lunch",
-//     image:
-//       "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//     cookingTime: "60 mins",
-//     createdAt: "2021-05-21",
-//   },
-//   {
-//     id: "3",
-//     name: "Pizza",
-//     category: "Dinner",
-//     image:
-//       "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//     cookingTime: "120 mins",
-//     createdAt: "2021-05-22",
-//   },
-//   {
-//     id: "4",
-//     name: "Pizza",
-//     category: "Dinner",
-//     image:
-//       "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//     cookingTime: "120 mins",
-//     createdAt: "2021-05-22",
-//   }
-// ];
 
 export default function Home() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
+
+  const [page, setPage] = useState(0)
+
+  const limit = 12
+
 
   useEffect(()=>{
 
@@ -57,8 +25,8 @@ export default function Home() {
             {
           query : `query {
               recipes (
-                skip : 0,
-                take : 10
+                skip : ${page * limit},
+                take : ${limit}
               ){
                 id,
                 name,
@@ -72,7 +40,9 @@ export default function Home() {
           })
 
           if(response.status === 200) {
-            setRecipes(response.data.data.recipes)
+            setRecipes(prevState =>{
+              return [...prevState, ...response.data.data.recipes]
+            })
           }
 
       }
@@ -84,7 +54,7 @@ export default function Home() {
     }
 
     fetchRecipes()
-  }, [])
+  }, [page])
 
   console.log(recipes)
   return (
@@ -92,11 +62,23 @@ export default function Home() {
       <Navbar />
       <div className="flex-1 ">
         <Appbar />
-        {/*******************************************   Recipe Cards    ************************************************ */}
-        <div className="grid grid-cols-3 gap-4 p-10">
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+        
+        <div className="p-10">
+
+          <Categories/>
+          {/*******************************************   Recipe Cards    ************************************************ */}
+        <h3 className="mb-2 mt-10 font-bold text-3xl">Browse recipes</h3>
+          <div className="grid grid-cols-4 gap-6">
+            {recipes && recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+          {/*******************************************   Pagination    ************************************************ */}
+          <div className="flex justify-center mt-10">
+            <button 
+            onClick={() => setPage(page => page + 1)}
+            className="bg-primary hover:bg-orange-400 text-white w-72 text-centers py-3 text-lg rounded-lg">Load more</button>
+          </div>
         </div>
       </div>
     </div>

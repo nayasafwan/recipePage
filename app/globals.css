@@ -5,6 +5,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-valentrix: 'Valentrix', sans-serif;
+  --font-saturdate: 'Saturdate', sans-serif;
+  --font-script4 : "Script4", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,4 +21,8 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.valentrix {
+  font-family: var(--font-valentrix);
 }

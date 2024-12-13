@@ -1,6 +1,6 @@
 
 import Image from "next/image"
-import Profile from "../assets/profile.jpg"
+import Profile from "../../public/assets/profile.jpg"
 import SearchIcon from "@mui/icons-material/Search"
 
 export default function Appbar() {

@@ -12,6 +12,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         beige : "#fff8f4",
+        primary : "#F67A24",
         secondary : "#3d3d4e"
       },
       fontFamily : {

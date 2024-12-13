@@ -14,6 +14,11 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
     return new Intl.DateTimeFormat("en-GB", options).format(newDate);
   }
 
+
+  const formatCategory = (category: string) => {
+    return category.charAt(0).toUpperCase() + category.slice(1).toLocaleLowerCase();
+  }
+
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         {/*******************************************   Image    ************************************************ */}
@@ -23,8 +28,8 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
         alt={recipe.name}
       />
       <div className="p-4 border-gray-300 rounded-b-lg border">
-        <h5 className="text-sm font-sm text-gray-500">
-          {recipe.category}
+        <h5 className="text-base font-sm text-primary">
+          {formatCategory(recipe.category)}
         </h5>
         <h1 className="text-lg font-semibold text-gray-800">{recipe.name}</h1>
         <div className="flex items-center justify-between mt-2">
@@ -33,7 +38,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
           <p>{recipe.cookingTime}</p>
           </div>
           <h1 className="text-gray-700 text-sm mx-3">
-            21 May
+            {formatDate(recipe.createdAt)}
           </h1>
         </div>
       </div>

@@ -7,6 +7,11 @@ interface Recipe {
     createdAt: string;
 }
 
+interface Category {
+    name: string;
+    image: string;
+}
 
 
-export type { Recipe };
+
+export type { Recipe, Category };

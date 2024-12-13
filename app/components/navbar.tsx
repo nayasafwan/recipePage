@@ -1,6 +1,7 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import localFont from "next/font/local";
 
 const list = [
   {
@@ -20,13 +21,16 @@ const list = [
   },
 ];
 
+
+
+
 export default function Navbar() {
 
   {/*******************************************   Drawer    ************************************************ */}
   return (
       <div className="w-2/12 h-full bg-beige text-gray-950">
         <div className="flex justify-center items-center bg-beige">
-          <h1 className="mt-5 text-5xl font-bold">Recipe</h1>
+          <h1 className="mt-5 text-5xl font-bold italic valentrix">All<span className="text-primary">Recipes</span></h1>
         </div>
         <div className="py-4">
           <ul className="space-y-2 text-secondary font-sans font-medium">
