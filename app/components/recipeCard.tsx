@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Recipe } from "../interfaces/interface";
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 

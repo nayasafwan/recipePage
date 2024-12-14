@@ -1,7 +1,8 @@
 "use client";
-import Image from "next/image"
 import { useState } from "react"
 import { Category } from "../interfaces/interface"
+import { useDispatch } from "react-redux";
+import { setCategory } from "../redux/recipeSlider";
 
 const categories = [
     {
@@ -68,11 +69,13 @@ export default function Categories() {
 const CategoryCard = ({ category, isModal }: { category: Category, isModal: boolean }) => {
 
     const [hoverEffect, setHoverEffect] = useState(false)
+    const dispatch = useDispatch()
 
     return (
         <div key={category.name}
             onMouseEnter={() => setHoverEffect(true)}
             onMouseLeave={() => setHoverEffect(false)}
+            onClick={() => dispatch(setCategory(category.name))}
             className={`bg-white hover:shadow-lg cursor-pointer border flex items-center justify-center rounded-lg ${isModal ? "w-60 h-60" : "flex-1 h-32"} overflow-hidden relative`}
             style={{
                 backgroundImage: `url(${category.image})`,

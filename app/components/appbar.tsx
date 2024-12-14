@@ -1,9 +1,15 @@
 
+"use client";
 import Image from "next/image"
 import Profile from "../../public/assets/profile.jpg"
 import SearchIcon from "@mui/icons-material/Search"
+import { useDispatch } from "react-redux"
+import { setSeachValue } from "../redux/recipeSlider"
 
 export default function Appbar() {
+
+
+  const dispatch = useDispatch()
 
     return (
         <div className="flex justify-between w-full py-4 h-20 px-10">
@@ -15,6 +21,7 @@ export default function Appbar() {
             type="text"
             name="search"
             placeholder="Search for recipes"
+            onChange={(e) => dispatch(setSeachValue(e.target.value)) }
             className="form-input border border-neutral-400 py-2 rounded-lg px-4 bg-white placeholder-gray-400 text-gray-500 appearance-none w-full block pl-12 focus:outline-none"
           />
         </div>

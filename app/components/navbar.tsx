@@ -1,7 +1,7 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import localFont from "next/font/local";
+
 
 const list = [
   {
@@ -23,8 +23,8 @@ const list = [
 
 
 
-
 export default function Navbar() {
+
 
   {/*******************************************   Drawer    ************************************************ */}
   return (
