@@ -1,8 +1,15 @@
+"use client"
 import { Recipe } from "../interfaces/interface";
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
+import { useRouter } from 'next/navigation';
+import { formatCategory } from "../utils/helper";
 
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
-  function formatDate(date: string) { 
+
+  const router = useRouter();
+
+  /*  */
+  function formatDate(date: string) {
     const newDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
       day: "2-digit",
@@ -14,13 +21,14 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   }
 
 
-  const formatCategory = (category: string) => {
-    return category.charAt(0).toUpperCase() + category.slice(1).toLocaleLowerCase();
+
+  const handleNavigation = () => {
+    router.push(`/recipe/${recipe.id}`);
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        {/*******************************************   Image    ************************************************ */}
+    <div onClick={() => handleNavigation()} className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out">
+      {/*******************************************   Image    ************************************************ */}
       <img
         className="w-full h-44 object-cover object-center"
         src={recipe.image}
@@ -32,9 +40,9 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
         </h5>
         <h1 className="text-lg font-semibold text-gray-800">{recipe.name}</h1>
         <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center justify-start gap-0.5">
-                <TimerOutlinedIcon fontSize="small"/>
-          <p>{recipe.cookingTime}</p>
+          <div className="flex items-center justify-start gap-0.5">
+            <TimerOutlinedIcon fontSize="small" />
+            <p>{recipe.cookingTime}</p>
           </div>
           <h1 className="text-gray-700 text-sm mx-3">
             {formatDate(recipe.createdAt)}

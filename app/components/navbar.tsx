@@ -1,7 +1,9 @@
+"use client";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-
+import AddIcon from '@mui/icons-material/Add';
+import { useRouter } from 'next/navigation';
 
 const list = [
   {
@@ -11,20 +13,31 @@ const list = [
   },
   {
     name: "Categories",
-    link: "/categories",
+    // link: "/categories",
     icon: <GridViewOutlinedIcon sx={{fontSize : 28}}/>,
   },
   {
     name: "Favorites",
-    link: "/favorites",
+    // link: "/favorites",
     icon: <FavoriteBorderOutlinedIcon sx={{fontSize : 28}} />,
   },
+  {
+    name : "Create Recipe",
+    link : "/recipe/create",
+    icon : <AddIcon sx={{fontSize : 28}}/>
+  }
 ];
 
 
 
 export default function Navbar() {
 
+  const router = useRouter();  
+
+  const handleNavigation = (link: any) => {
+    if (!link) return;
+    router.push(link);
+  }
 
   {/*******************************************   Drawer    ************************************************ */}
   return (
@@ -35,7 +48,7 @@ export default function Navbar() {
         <div className="py-4">
           <ul className="space-y-2 text-secondary font-sans font-medium">
             {list.map((item, index) => (
-              <li key={index} className="p-2 cursor-pointer">
+              <li onClick={()=> handleNavigation(item.link)} key={index} className="p-2 cursor-pointer">
                 <div className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 ">
                   <div>{item.icon}</div>
                   <p className="text-xl ms-3">{item.name}</p>

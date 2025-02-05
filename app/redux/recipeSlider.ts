@@ -16,5 +16,26 @@ const recipeSlider = createSlice({
   }
 });
 
+
+const recipeForm = createSlice({
+  name: "recipeForm",
+  initialState: {
+    recipe : {
+      name : "",
+      description : "",
+      cookingTime : "",
+      category : "",
+      image : "",
+      ingredients : [],
+      instructions : []
+    }
+  },
+  reducers: {
+    setRecipe : (state, action) => {
+        state.recipe = action.payload
+    }
+  }
+})
+
 export const { setSeachValue, setCategory } = recipeSlider.actions;
 export default recipeSlider.reducer;
