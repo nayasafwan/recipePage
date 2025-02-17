@@ -4,6 +4,7 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
 const list = [
   {
@@ -33,6 +34,7 @@ const list = [
 export default function Navbar() {
 
   const router = useRouter();  
+  const pathname = usePathname();
 
   const handleNavigation = (link: any) => {
     if (!link) return;
@@ -48,8 +50,8 @@ export default function Navbar() {
         <div className="py-4">
           <ul className="space-y-2 text-secondary font-sans font-medium">
             {list.map((item, index) => (
-              <li onClick={()=> handleNavigation(item.link)} key={index} className="p-2 cursor-pointer">
-                <div className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 ">
+              <li onClick={()=> handleNavigation(item.link)} key={index} className="p-1 cursor-pointer rounded-md">
+                <div className={`flex items-center gap-4 p-2 rounded-lg ${pathname === item.link ? "bg-primary text-white hover:bg-orange-400" : "hover:bg-red-100"}`}>
                   <div>{item.icon}</div>
                   <p className="text-xl ms-3">{item.name}</p>
                 </div>

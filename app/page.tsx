@@ -6,11 +6,12 @@ import axios, { AxiosResponse } from "axios";
 import Categories from "./components/categorie";
 import { useSelector } from 'react-redux';
 import Layout from "./components/layout";
-
+import api from "./utils/api"
 
 export default function Home() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [count, setCount] = useState<number>()
   const category = useSelector((state: any) => state.recipe.category)
   const searchValue = useSelector((state: any) => state.recipe.searchValue)
 
@@ -27,10 +28,9 @@ export default function Home() {
 
     prevStateRef.current = { page, category, searchValue };
 
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
     const fetchRecipes = async () => {
       try {
-        const response: AxiosResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`,
+        const response: AxiosResponse = await api.post("/graphql",
           {
             query: `query {
               recipes (
@@ -39,13 +39,16 @@ export default function Home() {
                 category : "${category}",
                 search : "${searchValue}"
               ){
-                id,
-                name,
-                description,
-                cookingTime,
-                image,
-                createdAt,
-                category
+                recipes {
+                  id,
+                  name,
+                  description,
+                  cookingTime,
+                  image,
+                  createdAt,
+                  category
+                },
+                count
               }
             }`
           })
@@ -57,13 +60,16 @@ export default function Home() {
         //Add new recipes (pagination)
         if (prevState.page !== page) {
           setRecipes(prevState => {
-            return [...prevState, ...response.data.data.recipes]
+            return [...prevState, ...response.data.data?.recipes?.recipes]
           })
+
         }
 
         //Filter recipes by category or search value
         else {
-          setRecipes(response.data.data.recipes)
+          console.log(response.data.data)
+          setRecipes(response.data.data?.recipes?.recipes)
+          setCount(response.data.data?.recipes?.count)
         }
 
       }
@@ -76,7 +82,6 @@ export default function Home() {
     fetchRecipes()
 
   }, [page, category, searchValue])
-
 
 
   return (
@@ -94,7 +99,8 @@ export default function Home() {
       <div className="flex justify-center mt-10">
         <button
           onClick={() => setPage(page => page + 1)}
-          className="bg-primary hover:bg-orange-400 text-white w-72 text-centers py-3 text-lg rounded-lg">Load more</button>
+          disabled={recipes.length === count}
+          className={`bg-primary text-white w-72 ${recipes.length === count ? "opacity-60" : "hover:bg-orange-400"} text-centers py-3 text-lg rounded-lg`}>Load more</button>
       </div>
     </Layout>
   );

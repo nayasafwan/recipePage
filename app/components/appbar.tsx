@@ -2,7 +2,7 @@
 "use client";
 import Image from "next/image"
 import { useState } from "react"
-import Profile from "../../public/assets/profile.jpg"
+import Profile from "../../public/assets/Profile.jpg"
 import SearchIcon from "@mui/icons-material/Search"
 import { useDispatch } from "react-redux"
 import { setSeachValue } from "../redux/recipeSlider"

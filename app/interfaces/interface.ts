@@ -29,4 +29,4 @@ interface Category {
 
 
 
-export type { Recipe, Category };
+export type { Recipe, Category, Ingredient, Instruction };
