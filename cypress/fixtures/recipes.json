@@ -1,0 +1,20 @@
+[
+    {
+      "id": "1",
+      "name": "recipe1",
+      "description": "description1",
+      "cookingTime": 10,
+      "image": "image1",
+      "createdAt": "2021-09-09",
+      "category": "Dinner"
+    },
+    {
+      "id": "2",
+      "name": "recipe2",
+      "description": "description2",
+      "cookingTime": 20,
+      "image": "image2",
+      "createdAt": "2021-09-09",
+      "category": "Snacks"
+    }
+  ]

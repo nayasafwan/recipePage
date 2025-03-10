@@ -5,6 +5,9 @@ import Appbar from "./appbar"
 export default function Layout({ children }: { children: React.ReactNode }) {
 
     return (
+    <html lang="en">
+      <body>
+        <main> 
         <div className="flex h-screen">
             <Navbar />
             <div className="flex-1 ">
@@ -14,5 +17,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
             </div>
         </div>
+        </main>
+        </body>
+    </html>
     )
 }

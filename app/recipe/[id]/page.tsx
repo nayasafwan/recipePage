@@ -1,8 +1,7 @@
 "use client";
 import { useParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosResponse } from "axios";
-import Layout from "../../components/layout"
+import { useEffect, useState } from 'react';
+import  { AxiosResponse } from "axios";
 import { Recipe } from "../../interfaces/interface";
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import { formatCategory, formatDate } from '@/app/utils/helper';
@@ -11,7 +10,7 @@ import api from "../../utils/api"
 
 const RecipePage = () => {
 
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
 
   const [recipe, setRecipe] = useState<Recipe>();
 
@@ -72,7 +71,6 @@ const RecipePage = () => {
   }
 
   return (
-    <Layout>
       <div className="">
         <h1 className="text-3xl font-semibold">{recipe.name}</h1>
         <p className="text-gray-500">{recipe.description}</p>
@@ -127,7 +125,6 @@ const RecipePage = () => {
           </ul>
         </div>
       </div>
-    </Layout>
   );
 };
 

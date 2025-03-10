@@ -27,7 +27,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   }
 
   return (
-    <div onClick={() => handleNavigation()} className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out">
+    <div onClick={() => handleNavigation()} id={`recipe-${recipe.id}`} className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out">
       {/*******************************************   Image    ************************************************ */}
       <img
         className="w-full h-44 object-cover object-center"

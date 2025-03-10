@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const list = [
   {
     name: "Home",
-    link: "/",
+    link: "/recipe",
     icon: <HomeOutlinedIcon sx={{fontSize : 28}}/>,
   },
   {

@@ -2,9 +2,11 @@ interface Ingredient {
     name: string;
     quantity: string;
     measuringUnit: string;
+    abbreviation? : string;
 }
 
 interface Instruction {
+    id : string;
     name: string;
     order: number;
 }
