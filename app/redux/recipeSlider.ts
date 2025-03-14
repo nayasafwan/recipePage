@@ -5,7 +5,8 @@ const recipeSlider = createSlice({
   name: "recipeSlider",
   initialState: {
     searchValue : "",
-    category : ""
+    category : "",
+    showAuthModal : false
   },
   reducers: {
     setSeachValue : (state, action) => {
@@ -13,6 +14,9 @@ const recipeSlider = createSlice({
     },
     setCategory : (state, action) => {
         state.category = action.payload
+    },
+    setAuthModal : (state, action) => {
+        state.showAuthModal = action.payload
     }
   }
 });
@@ -20,5 +24,5 @@ const recipeSlider = createSlice({
 
 
 
-export const { setSeachValue, setCategory } = recipeSlider.actions;
+export const { setSeachValue, setCategory, setAuthModal } = recipeSlider.actions;
 export default recipeSlider.reducer;

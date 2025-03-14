@@ -1,9 +1,11 @@
+"use client";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ClientComponent from "./components/clientComponent";
+import ClientComponent from "./components/parent/client";
 import Navbar from "./components/navbar";
 import Appbar from "./components/appbar";
+
 
 
 const geistSans = localFont({
@@ -36,11 +38,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${valentrix.variable} antialiased`}
       >
+        <main>
         <ClientComponent>
            <div className="flex h-screen">
                <Navbar />
@@ -52,6 +58,7 @@ export default function RootLayout({
                </div>
            </div>
         </ClientComponent>
+        </main>
       </body>
     </html>
   );

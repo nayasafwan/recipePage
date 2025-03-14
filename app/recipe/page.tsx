@@ -6,6 +6,7 @@ import { AxiosResponse } from "axios";
 import Categories from "../components/categorie";
 import { useSelector } from 'react-redux';
 import api from "../utils/api"
+import LoginModal from "../components/auth";
 
 export default function HomePage() {
 
@@ -102,6 +103,7 @@ export default function HomePage() {
           disabled={recipes.length === count}
           className={`bg-primary text-white w-72 ${recipes.length === count ? "opacity-60" : "hover:bg-orange-400"} text-centers py-3 text-lg rounded-lg`}>Load more</button>
       </div>
+
     </>
   );
 }
