@@ -31,7 +31,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
       {/*******************************************   Image    ************************************************ */}
       <img
         className="w-full h-44 object-cover object-center"
-        src={recipe.image}
+        src={require(`../../public/assets/recipes/${recipe.image}`)}
         alt={recipe.name}
       />
       <div className="p-4 border-gray-300 rounded-b-lg border">

@@ -29,6 +29,14 @@ interface Category {
     image: string;
 }
 
+interface User {
+    id? : string;
+    username : string;
+    email : string;
+    password : string;
+    confirmPassword? : string;
+}
 
 
-export type { Recipe, Category, Ingredient, Instruction };
+
+export type { Recipe, Category, Ingredient, Instruction, User };

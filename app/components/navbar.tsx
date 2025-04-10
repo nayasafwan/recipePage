@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import AuthModal from "./auth";
 import { setAuthModal } from "../redux/recipeSlider";
+import { ToastContainer } from "react-toastify";
 
 const list = [
   {
@@ -38,14 +39,13 @@ export default function Navbar() {
 
   const router = useRouter();  
   const pathname = usePathname();
-  const dispatch = useDispatch();
+
 
   const handleNavigation = (link: any, name : string) => {
+    console.log(link)
     if (!link) return;
-    if(name === "Create Recipe" || name === "Favorites"){
-      dispatch(setAuthModal(true))
-    }
     else{
+      console.log(link)
     router.push(link);
     }
   }
@@ -73,6 +73,11 @@ export default function Navbar() {
         </div>
       </div>
       {showAuthModal && <AuthModal />}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={4000}
+        theme="colored"
+      />
       </>
   );
 }

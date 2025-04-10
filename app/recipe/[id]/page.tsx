@@ -39,7 +39,7 @@ const RecipePage = () => {
                 }
               }
               ... on ErrorMessage {
-                error,
+                message,
                 code
               }
             }
@@ -47,7 +47,7 @@ const RecipePage = () => {
           `
         })
 
-        if (!response.data.data.error) {
+        if (!response.data.data.message) {
           setRecipe(response.data?.data?.recipe)
         }
       } catch (error) {

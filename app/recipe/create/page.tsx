@@ -27,33 +27,16 @@ import {
 } from "../../redux/recipeFormSlider";
 import { ToastContainer, toast } from "react-toastify";
 import units from "../../data/measuringUnit.json";
+import ProtectedRoute from "@/app/components/parent/protectedRoute";
+import api from "@/app/utils/api";
 
 export default function CreateRecipe() {
-  // const [createdRecipe, setCreatedRecipe] = useState({
-  //   name: "",
-  //   description: "",
-  //   category: "",
-  //   image: "",
-  //   cookingTime: "",
-  //   ingredients: [
-  //     {
-  //       name: "",
-  //       quantity: "",
-  //       measuringUnit: "",
-  //     },
-  //   ],
-  //   instructions: [
-  //     {
-  //       id: "1",
-  //       name: "",
-  //       order: 1,
-  //     },
-  //   ],
-  // });
+  
+  
 
   const createdRecipe = useSelector((state: any) => state.recipeForm.recipe);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<string | null>(null);
   const dispatch = useDispatch();
 
   const validateRecipe = () => {
@@ -105,41 +88,63 @@ export default function CreateRecipe() {
     return true;
   };
 
+
+  console.log("createdRecipe", createdRecipe);
+
   const createRecipe = async () => {
-    const isRecipeValid = validateRecipe();
 
-    if (!isRecipeValid) {
-      return;
+    if (!validateRecipe()) return;
+
+    
+    try {
+
+      const imagePath = await saveFile();
+
+      let formatInstructions = createdRecipe.instructions.map((instruction: Instruction) => instruction.name)
+
+      const response = await api.post("/graphql", {
+        query: `mutation PostRecipe(
+            $name: String!
+            $description: String!
+            $category: String!
+            $cookingTime: String!
+            $image: String!
+            $ingredients: [IngredientInput!]!
+            $instructions: [String!]!
+          )
+         {
+          postRecipe(
+            name: $name
+            description: $description
+            category: $category
+            cookingTime: $cookingTime
+            image: $image
+            ingredients: $ingredients
+            instructions: $instructions
+          ){ ... on Recipe{
+              id
+            }
+            ... on ErrorMessage {
+              message,
+              code
+            } 
+          }
+        }`,
+        variables: {
+          name: createdRecipe.name,
+          description: createdRecipe.description,
+          category: createdRecipe.category,
+          cookingTime: createdRecipe.cookingTime,
+          image: imagePath,
+          ingredients: createdRecipe.ingredients,
+          instructions: formatInstructions
+        }
+      })
+
     }
-
-    // try {
-    //   const response = await api.post("/graphql", {
-    //     query: `mutation {
-    //       createRecipe(
-    //         name: "${createdRecipe.name}",
-    //         description: "${createdRecipe.description}",
-    //         category: "${createdRecipe.category}",
-    //         cookingTime: ${createdRecipe.cookingTime},
-    //         image: "https://i.pinimg.com/originals/1c/ee/65/1cee65777195641ae9c270cd3970346b.jpg",
-    //         ingredients: ${createdRecipe.ingredients},
-    //         instructions: ${createdRecipe.instructions}
-    //       ){
-    //         id,
-    //         name,
-    //         description,
-    //         category,
-    //         cookingTime,
-    //         image,
-    //         ingredients,
-    //         instructions
-    //       }
-    //     }`
-    //   })
-
-    // }
-    // catch (error) {
-    //   console.log(error);
-    // }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (event: any) => {
@@ -148,12 +153,13 @@ export default function CreateRecipe() {
   };
 
   const handleImageChange = (event: any) => {
-    console.log(event.target.files);
     if (event.target.files?.length) {
       const file = event.target.files[0];
       const url = URL.createObjectURL(file);
-      setRecipeValue({ name: "image", value: file });
-      setImageUrl(url);
+      setFile(file);
+
+      dispatch(setRecipeValue({ name: "image", value: url }))
+      
     }
   };
 
@@ -163,6 +169,35 @@ export default function CreateRecipe() {
     }
   };
 
+
+  const saveFile = async () => {
+
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('/api/uploadImage', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+
+      return data.imageName; // Return the image name or URL as needed
+      
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
+  }
+
+  
+
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
     if (!over || active.id === over.id) return;
     const oldIndex = createdRecipe.instructions.findIndex((item : Instruction) => item.id === active.id);
@@ -171,8 +206,10 @@ export default function CreateRecipe() {
     dispatch(rearrangeInstruction({ oldIndex, newIndex }));
   };
 
+
+
   return (
-    <>
+    <ProtectedRoute>
       <h1 className="text-3xl font-semibold">Create Recipe</h1>
       <div className="w-full flex flex-col gap-8 py-4 px-6 rounded-lg border-2 border-gray-300 border-opacity-50 mt-4">
         <div>
@@ -203,11 +240,11 @@ export default function CreateRecipe() {
         </div>
         <div>
           <h2 className="text-lg font-medium mb-2">Image</h2>
-          {imageUrl ? (
+          {createdRecipe.image ? (
             <img
               className="border-slate-300 object-contain w-full border rounded-lg h-40 relative cursor-pointer"
               onClick={() => openFile()}
-              src={imageUrl || ""}
+              src={createdRecipe.image || ""}
             />
           ) : (
             <div className="border bg-white border-slate-300 flex-col border-dashed w-full h-40 py-8 flex items-center justify-center rounded-lg">
@@ -353,7 +390,7 @@ export default function CreateRecipe() {
         autoClose={4000}
         theme="colored"
       />
-    </>
+    </ProtectedRoute>
   );
 }
 
@@ -378,7 +415,10 @@ const IngredientCard = ({
   const dispatch = useDispatch();
 
   const handleIngredientChange = (event: any) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if(name === "quantity") {
+      value = Number(value);
+    }
     dispatch(setIngredientState({ index, name, value }));
   };
 
