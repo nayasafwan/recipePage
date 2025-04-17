@@ -7,6 +7,8 @@ const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [username, setUsername] = useState<String>()
+
   useEffect(() => {
     const fetchSession = async () => {
       try {
@@ -21,11 +23,14 @@ const useAuth = () => {
 
         if (response.data.data.user.code === 200) {
           setIsAuthenticated(true);
+          setUsername(response.data.data.user.username)
         } else {
           setIsAuthenticated(false);
+          setUsername("Guest")
         }
       } catch (error) {
         setIsAuthenticated(false);
+        setUsername("Guest")
       } finally {
         setLoading(false);
       }
@@ -34,7 +39,7 @@ const useAuth = () => {
     fetchSession();
   }, []);
 
-  return { isAuthenticated, loading };
+  return { isAuthenticated, loading, username };
 };
 
 export default useAuth;

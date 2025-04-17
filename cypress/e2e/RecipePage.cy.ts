@@ -32,7 +32,7 @@ describe('recipe page', () => {
       }
     });
 
-    cy.visit('http://localhost:3000/recipe')
+    cy.visit('http://localhost:3000')
   })
 
   it('visits default url and redirects to /recipe url', () => {

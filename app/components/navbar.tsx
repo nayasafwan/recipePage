@@ -29,7 +29,8 @@ const list = [
   {
     name : "Create Recipe",
     link : "/recipe/create",
-    icon : <AddIcon sx={{fontSize : 28}}/>
+    icon : <AddIcon sx={{fontSize : 28}}/>,
+    id : "create-recipe"
   }
 ];
 
@@ -62,7 +63,7 @@ export default function Navbar() {
         <div className="py-4">
           <ul className="space-y-2 text-secondary font-sans font-medium">
             {list.map((item, index) => (
-              <li onClick={()=> handleNavigation(item.link, item.name)} key={index} className="p-1 cursor-pointer rounded-md">
+              <li id={item.id} onClick={()=> handleNavigation(item.link, item.name)} key={index} className="p-1 cursor-pointer rounded-md">
                 <div className={`flex items-center gap-4 p-2 rounded-lg ${pathname === item.link ? "bg-primary text-white hover:bg-orange-400" : "hover:bg-red-100"}`}>
                   <div>{item.icon}</div>
                   <p className="text-xl ms-3">{item.name}</p>

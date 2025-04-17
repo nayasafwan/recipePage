@@ -379,6 +379,7 @@ export default function CreateRecipe() {
         <div className="flex justify-end mt-6">
           <button
             onClick={() => createRecipe()}
+            id="create-recipe"
             className="bg-primary hover:bg-orange-400 text-white w-40 text-centers py-2.5 text-lg rounded-lg"
           >
             Create Recipe

@@ -1,14 +1,15 @@
 
 "use client";
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Profile from "../../public/assets/Profile.jpg"
 import SearchIcon from "@mui/icons-material/Search"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setSeachValue } from "../redux/recipeSlider"
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import useAuth from "../utils/useAuth";
 
 export default function Appbar() {
 
@@ -16,6 +17,12 @@ export default function Appbar() {
   const dispatch = useDispatch()
 
   const [toggleNotification, setToggleNotification] = useState(true)
+
+
+  const { username = "Guest" }: { username?: String } = useAuth();
+
+  const user = useSelector((state: any) => state.user.username)
+
 
     return (
         <div className="flex justify-between w-full py-4 h-20 px-10">
@@ -44,7 +51,7 @@ export default function Appbar() {
           {/*******************************************   Profile    ************************************************ */}
           <div className="flex items-center space-x-2 min-w-40">
             <Image src={Profile} alt="Profile" className="rounded-full w-9 h-9 hover:ring-blue-400 hover:ring-2 cursor-pointer"/>
-            <h3 className="text-sm font-medium text-gray-900 text-center pr-4">Naya Saf</h3>
+            <h3 id="username" className="text-sm font-medium text-gray-900 text-center pr-4">{user ?? username}</h3>
             <ExpandMoreOutlinedIcon className="text-gray-900 cursor-pointer hover:text-gray-950" sx={{fontSize : "18px"}}/>
             </div>
           </div>
