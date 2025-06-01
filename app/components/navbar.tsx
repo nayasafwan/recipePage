@@ -27,8 +27,8 @@ const list = [
     icon: <FavoriteBorderOutlinedIcon sx={{fontSize : 28}} />,
   },
   {
-    name : "Create Recipe",
-    link : "/recipe/create",
+    name : "My Recipes",
+    link : "/users/recipe",
     icon : <AddIcon sx={{fontSize : 28}}/>,
     id : "create-recipe"
   }
@@ -38,7 +38,7 @@ const list = [
 
 export default function Navbar() {
 
-  const router = useRouter();  
+  const router = useRouter();
   const pathname = usePathname();
 
 
@@ -65,7 +65,7 @@ export default function Navbar() {
             {list.map((item, index) => (
               <li id={item.id} onClick={()=> handleNavigation(item.link, item.name)} key={index} className="p-1 cursor-pointer rounded-md">
                 <div className={`flex items-center gap-4 p-2 rounded-lg ${pathname === item.link ? "bg-primary text-white hover:bg-orange-400" : "hover:bg-red-100"}`}>
-                  <div>{item.icon}</div>
+                  {/* <div>{item.icon}</div> */}
                   <p className="text-xl ms-3">{item.name}</p>
                 </div>
               </li>

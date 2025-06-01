@@ -83,7 +83,6 @@ export default function HomePage() {
 
   }, [page, category, searchValue])
 
-  console.log(category)
 
   return (
     <>

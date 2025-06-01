@@ -15,7 +15,7 @@ const useAuth = () => {
         const response: AxiosResponse = await api.post("/graphql", {
           query: `query {
                     user {
-                        message,
+                        username,
                         code
                     }
                 }`,

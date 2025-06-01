@@ -26,6 +26,11 @@ const recipeForm = createSlice({
     },
     reducers: {
         setRecipe: (state, action) => {
+            // Arrange instructions
+
+            let arrangedInstructions = action.payload.instructions.sort((a : any , b : any) => a.order - b.order);
+
+            action.payload.instructions = arrangedInstructions
             state.recipe = action.payload
         },
 

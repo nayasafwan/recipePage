@@ -10,6 +10,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import NotificationsOffOutlinedIcon from '@mui/icons-material/NotificationsOffOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import useAuth from "../utils/useAuth";
+import Link from "next/link";
 
 export default function Appbar() {
 
@@ -23,9 +24,9 @@ export default function Appbar() {
 
   const user = useSelector((state: any) => state.user.username)
 
-
+  console.log(username)
     return (
-        <div className="flex justify-between w-full py-4 h-20 px-10">
+        <div className="flex justify-between w-full py-4 h-20 px-8">
         {/*******************************************   Search Input    ************************************************ */}
       
         <div className="relative text-gray-400 focus-within:text-gray-600 w-1/2" >
@@ -41,6 +42,10 @@ export default function Appbar() {
 
 
         <div className="flex items-center space-x-4">
+          {/*********************************************** Create recipe ********************************************* */}
+          <Link href="/recipe/create">
+            <button className="bg-primary text-white py-2 px-3 hover:bg-orange-400 rounded-md">Add Recipe</button>
+          </Link>
           {/*******************************************   Notification    ************************************************ */}
           <div className="cursor-pointer text-gray-900 hover:text-gray-950"  onClick={() => setToggleNotification(prev => !prev)}>
           {toggleNotification ?<NotificationsNoneOutlinedIcon className="opacity-80" sx={{fontSize : "32px"}}/> :
@@ -51,7 +56,7 @@ export default function Appbar() {
           {/*******************************************   Profile    ************************************************ */}
           <div className="flex items-center space-x-2 min-w-40">
             <Image src={Profile} alt="Profile" className="rounded-full w-9 h-9 hover:ring-blue-400 hover:ring-2 cursor-pointer"/>
-            <h3 id="username" className="text-sm font-medium text-gray-900 text-center pr-4">{user ?? username}</h3>
+            <h3 id="username" className="text-sm font-medium text-gray-900 text-center pr-3">{username}</h3>
             <ExpandMoreOutlinedIcon className="text-gray-900 cursor-pointer hover:text-gray-950" sx={{fontSize : "18px"}}/>
             </div>
           </div>
